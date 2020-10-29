@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Startup Prediction</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"> -->
+
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <style>
+    label {
+      display: inline-block;
+      margin-bottom: 0px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    span {
+      margin-bottom: 10px;
+    }
+
+    .slidecontainer {
+      width: 90%;
+      margin-bottom: 0px;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 5px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 1;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
+
+    .slider:hover {
+      opacity: 1;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: steelblue;
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #4CAF50;
+      cursor: pointer;
+    }
+
+    select {
+      width: 250px;
+
+    }
+
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    .bg {
+      padding-top: 5rem;
+      padding-bottom: calc(20rem - 3rem);
+      background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.7) 100%), url('static/img/bg-masthead.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+
+      background-size: cover;
+    }
+
+    table {
+      margin: 0;
+      font-family: "Merriweather", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #212529;
+
+
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="bg" , align='center'>
+    <h1>Predict Startup Success</h1>
+    <h3> Enter the following values to predict whether a startup is worth an investment</h3>
+    <table cellpadding='30' align="center">
+      <!-- <tr>
+      <td colspan="3">
+        <H3 align="center">Customize your car parameters and get real-time price predictions!</H3>
+      </td>
+    </tr> -->
+
+      <tr>
+        <td width="300px">
+          <div class="dropdownlist">
+            <label for="category">Choose a Category: <span><select id="category"></select></span></label>
+          </div>
+          <div class="dropdownlist">
+            <label for="state">Choose a State: <span><select id="state"></select></span></label>
+          </div>
+        </td>
+
+        <td width="300px">
+          <div class="dropdownlist">
+            <label for="funding_rounds">Number of Funding Rounds: <span><select
+                  id="funding_rounds"></select></span></label>
+          </div>
+          <div class="dropdownlist">
+            <label for="investments">Number of Investments: <span><select id="investments"></select></span></label>
+          </div>
+          <div class="dropdownlist">
+            <label for="top500">Number of Top 500 Investors: <span><select id="top500"></select></span></label>
+          </div>
+          <div class="dropdownlist">
+            <label for="vc">Is VC Backed: <span><select id="vc"></select></span></label>
+          </div>
+
+        </td>
+        <td width="300px">
+          <div class="slidecontainer">
+            <label> Founded Year: <span id="founded_year"></span></label>
+            <input type="range" min="1980" max="2020" value="2014" class="slider" id="founded_year_range" step="1">
+          </div>
+          <div class="slidecontainer">
+            <label> First Funding Year: <span id="first_funding_year"></span></label>
+            <input type="range" min="1980" max="2020" value="2014" class="slider" id="first_funding_year_range"
+              step="1">
+          </div>
+          <div class="slidecontainer">
+            <label> Round A Funded Year: <span id="round_a_funded"></span></label>
+            <input type="range" min="1980" max="2020" value="2014" class="slider" id="round_a_year" step="1">
+          </div>
+          <div class="slidecontainer">
+            <label> Round B Funded Year: <span id="round_b_funded"></span></label>
+            <input type="range" min="1980" max="2020" value="2014" class="slider" id="round_b_year" step="1">
+          </div>
+          <div class="slidecontainer">
+            <label> Round C Funded Year: <span id="round_c_funded"></span></label>
+            <input type="range" min="1980" max="2020" value="2014" class="slider" id="round_c_year" step="1">
+          </div>
+          <div class="slidecontainer">
+            <label> Round D Funded Year: <span id="round_d_funded"></span></label>
+            <input type="range" min="1980" max="2020" value="2014" class="slider" id="round_d_year" step="1">
+          </div>
+        </td>
+
+        <td width='300px'>
+          <div class="slidecontainer">
+            <label> Total Funding : $<span id="total_funding"></span>M</label>
+            <input type="range" min="0" max="3000" value="1" class="slider" id="total_funding_range" step="1">
+          </div>
+          <div class="dropdownlist">
+            <label for="roundA">Round A: <span><select id="roundA"></select></span></label>
+          </div>
+          <div class="slidecontainer">
+            <label> Round A Amount: $<span id="round_a_amount"></span>M</label>
+            <input type="range" min="0" max="50" value="1" class="slider" id="round_a_range" step="1">
+          </div>
+
+          <div class="dropdownlist">
+            <label for="roundB">Round B: <span><select id="roundB"></select></span></label>
+          </div>
+          <div class="slidecontainer">
+            <label> Round B Amount: $<span id="round_b_amount"></span></label>
+            <input type="range" min="0" max="50" value="1" class="slider" id="round_b_range" step="1">
+          </div>
+
+          <div class="dropdownlist">
+            <label for="roundC">Round C: <span><select id="roundC"></select></span></label>
+          </div>
+          <div class="slidecontainer">
+            <label> Round C Amount: $<span id="round_c_amount"></span></label>
+            <input type="range" min="0" max="500" value="1" class="slider" id="round_c_range" step="1">
+          </div>
+
+          <div class="dropdownlist">
+            <label for="roundD">Round D: <span><select id="roundD"></select></span></label>
+          </div>
+          <div class="slidecontainer">
+            <label> Round D Amount: $<span id="round_d_amount"></span>M</label>
+            <input type="range" min="0" max="500" value="1" class="slider" id="round_d_range" step="1">
+          </div>
+
+        </td>
+
+        <!-- <td width="300px">
+          <label>Success: <span id="success"></span></label>
+          <p style="text-align:center"> -->
+        <table>
+          <div>
+
+            <td valign="bottom" align="bottom"> <label style="font-size: 20px;">Success: <span id="success"
+                  style='font-size: 20px;'></span>%</label>
+            </td>
+
+        </table>
+
+    </table>
+
+
+    </td>
+    </tr>
+    </table>
+
+  </div>
+
+
+
+</body>
+<script>
+  // schema for adding dict to dropdown values
+  var category = {{ category_dict| safe }}
+  for (let key in category) {
+    i = 0;
+    let value = category[key];
+    //alert( value);
+    $('#category').append('<option value=' + value + '>' + key + '</option>');
+    i++;
+  }
+
+  var state = {{ state_dict| safe }}
+  for (let key in state) {
+    i = 0;
+    let value = state[key];
+    //alert( value);
+    $('#state').append('<option value=' + value + '>' + key + '</option>');
+    i++;
+  }
+
+  var investments = {{ investments_dict| safe }}
+  for (let key in investments) {
+    i = 0;
+    let value = investments[key];
+    //alert( value);
+    $('#investments').append('<option value=' + value + '>' + key + '</option>');
+    i++;
+  }
+
+  var top500 = {{ top500_dict| safe }}
+  for (let key in top500) {
+    i = 0;
+    let value = top500[key];
+    //alert( value);
+    $('#top500').append('<option value=' + value + '>' + key + '</option>');
+    i++;
+  }
+
+  var vc = {{ vc_dict| safe }}
+  for (let key in vc) {
+    i = 0;
+    let value = vc[key];
+    //alert( value);
+    $('#vc').append('<option value=' + value + '>' + key + '</option>');
+    i++;
+  }
+
+  var roundA = {{ roundA_dict | safe }}
+  for (let key in roundA) {
+    i = 0;
+    let value = roundA[key];
+    //alert( value);
+    $('#roundA').append('<option value=' + value + '>' + key + '</option>');
+    i++;
+  }
+
+  var roundB = {{ roundB_dict| safe }}
+  for (let key in roundB) {
+    i = 0;
+    let value = roundB[key];
+    //alert( value);
+    $('#roundB').append('<option value=' + value + '>' + key + '</option>');
+    i++;
+  }
+
+  var roundC = {{ roundC_dict| safe }}
+  for (let key in roundC) {
+    i = 0;
+    let value = roundC[key];
+    //alert( value);
+    $('#roundC').append('<option value=' + value + '>' + key + '</option>');
+    i++;
+  }
+  var roundD = {{ roundD_dict| safe }}
+  for (let key in roundD) {
+    i = 0;
+    let value = roundD[key];
+    //alert( value);
+    $('#roundD').append('<option value=' + value + '>' + key + '</option>');
+    i++;
+  }
+
+  var funding_rounds = {{ rounds_dict| safe }}
+  for (let key in funding_rounds) {
+    i = 0;
+    let value = funding_rounds[key];
+    //alert( value);
+    $('#funding_rounds').append('<option value=' + value + '>' + key + '</option>');
+    i++;
+  }
+
+  var slider3 = $("#founded_year_range");
+  $("#founded_year").html(slider3.val());
+  slider3.change(function () {
+    $("#founded_year").html(slider3.val());
+  })
+
+  var slider4 = $("#round_a_range");
+  $("#round_a_amount").html(slider4.val());
+  slider4.change(function () {
+    $("#round_a_amount").html(slider4.val());
+  })
+
+  var slider9 = $("#round_b_range");
+  $("#round_b_amount").html(slider9.val());
+  slider9.change(function () {
+    $("#round_b_amount").html(slider9.val());
+  })
+
+  var slider10 = $("#round_c_range");
+  $("#round_c_amount").html(slider10.val());
+  slider10.change(function () {
+    $("#round_c_amount").html(slider10.val());
+  })
+
+  var slider11 = $("#round_d_range");
+  $("#round_d_amount").html(slider11.val());
+  slider11.change(function () {
+    $("#round_d_amount").html(slider11.val());
+  })
+
+  var slider12 = $("#round_a_year");
+  $("#round_a_funded").html(slider12.val());
+  slider12.change(function () {
+    $("#round_a_funded").html(slider12.val());
+  })
+
+  var slider13 = $("#round_b_year");
+  $("#round_b_funded").html(slider13.val());
+  slider13.change(function () {
+    $("#round_b_funded").html(slider13.val());
+  })
+
+  var slider14 = $("#round_c_year");
+  $("#round_c_funded").html(slider14.val());
+  slider14.change(function () {
+    $("#round_c_funded").html(slider14.val());
+  })
+
+  var slider15 = $("#round_d_year");
+  $("#round_d_funded").html(slider15.val());
+  slider15.change(function () {
+    $("#round_d_funded").html(slider15.val());
+  })
+
+  var slider16 = $("#first_funding_year_range");
+  $("#first_funding_year").html(slider16.val());
+  slider16.change(function () {
+    $("#first_funding_year").html(slider16.val());
+  })
+
+  var slider17 = $("#total_funding_range");
+  $("#total_funding").html(slider17.val());
+  slider17.change(function () {
+    $("#total_funding").html(slider17.val());
+  })
+
+  var logger = '';
+
+  // functions for updating predictions
+  function update_dashboard(pred) {
+    $('#success').html(pred);
+  }
+
+  function fetchdata() {
+
+    // dictionary that stores user inputs
+    $.getJSON({
+      type: "GET",
+      url: '{{ url_for("background_process") }}',
+      data: {
+        'Category': $('#category option:selected').html(),
+        'State': $('#state option:selected').html(),
+
+        'Funding_rounds': $('#funding_rounds option:selected').html(),
+        'Investments': $('#investments option:selected').html(),
+        'Top500': $('#top500 option:selected').html(),
+        'VC': $('#vc option:selected').html(),
+
+        'Founded_year': $("#founded_year").html(),
+        'First_Funding_Year': $("#first_funding_year").html(),
+
+        'Total_Funding': $('#total_funding').html(),
+        'Round_A': $("#roundA option:selected").html(),
+        'Round_A_Amount': $('#round_a_amount').html(),
+        'Round_A_funded': $("#round_a_funded").html(),
+
+        'Round_B': $("#roundB option:selected").html(),
+        'Round_B_Amount': $('#round_b_amount').html(),
+        'Round_B_funded': $("#round_b_funded").html(),
+
+        'Round_C': $("#roundC option:selected").html(),
+        'Round_C_Amount': $('#round_c_amount').html(),
+        'Round_C_funded': $("#round_c_funded").html(),
+
+        'Round_D': $("#roundD option:selected").html(),
+        'Round_D_Amount': $('#round_d_amount').html(),
+        'Round_D_funded': $("#round_d_funded").html(),
+      },
+
+      success: function (data) {
+
+        // $('#output').html(data.output).show();
+        logger = data.pred
+        update_dashboard(data.pred);
+      },
+
+
+    });
+
+  }
+  // add event listener to capture changes to wine parameters
+  $(document).mouseup(function () { fetchdata() });
+  $(document).on('change', function () { fetchdata() });
+
+
+</script>
+
+</html>
